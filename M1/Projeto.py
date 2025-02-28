@@ -26,29 +26,23 @@ class EightPuzzle:
     def ler_config(self, tipo):
         """
         Lê uma configuração do tabuleiro.
-        O usuário introduz 8 números únicos entre 1 e 8 (o 0 é adicionado automaticamente).
+        O usuário introduz 9 números únicos entre 0 e 8, onde 0 representa o espaço vazio.
         """
-        print(f"Introduza 8 números únicos entre 1 e 8 para a configuração {tipo} (o 0 será inserido automaticamente):")
-        numeros_validos = set(range(1, 9))
+        print(f"Introduza 9 números únicos entre 0 e 8 para a configuração {tipo}:")
+        numeros_validos = set(range(0, 9))
         numeros_usados = set()
         tabuleiro = []
 
         for i in range(3):
             while True:
                 try:
-                    if i < 2:
-                        linha = list(map(int, input(f"Linha {i+1}: ").split()))
-                        if len(linha) != 3:
-                            print("Erro: Deve introduzir exatamente 3 números.")
-                            continue
-                    else:
-                        linha = list(map(int, input(f"Linha {i+1} (apenas 2 números): ").split()))
-                        if len(linha) != 2:
-                            print("Erro: Deve introduzir exatamente 2 números na última linha.")
-                            continue
+                    linha = list(map(int, input(f"Linha {i+1}: ").split()))
+                    if len(linha) != 3:
+                        print("Erro: Deve introduzir exatamente 3 números.")
+                        continue
 
                     if not all(num in numeros_validos for num in linha):
-                        print("Erro: Apenas números de 1 a 8 são permitidos.")
+                        print("Erro: Apenas números de 0 a 8 são permitidos.")
                         continue
 
                     if any(num in numeros_usados for num in linha):
@@ -62,7 +56,6 @@ class EightPuzzle:
                 except ValueError:
                     print("Erro: Introduza apenas números inteiros separados por espaço.")
 
-        tabuleiro[2].append(0)  # Adiciona o 0 automaticamente
         return tabuleiro
 
     def mostrar_tabuleiro_custom(self, board):
