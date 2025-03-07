@@ -1,5 +1,4 @@
-# language: python
-import keyboard  # Biblioteca para capturar teclas (para modo manual)
+import keyboard  
 import os
 import sys
 import heapq
@@ -24,10 +23,7 @@ class EightPuzzle:
         self.moves = 0  # Contador de movimentos
 
     def ler_config(self, tipo):
-        """
-        Lê uma configuração do tabuleiro.
-        O usuário introduz 9 números únicos entre 0 e 8, onde 0 representa o espaço vazio.
-        """
+       
         print(f"Introduza 9 números únicos entre 0 e 8 para a configuração {tipo}:")
         numeros_validos = set(range(0, 9))
         numeros_usados = set()
@@ -59,22 +55,22 @@ class EightPuzzle:
         return tabuleiro
 
     def mostrar_tabuleiro_custom(self, board):
-        """Mostra o tabuleiro dado."""
+       
         os.system('cls' if os.name == 'nt' else 'clear')
         for row in board:
             print(" ".join(str(num) if num != 0 else " " for num in row))
         print("\n")
     
     def mostrar_tabuleiro(self):
-        """Mostra o tabuleiro atual."""
+        
         self.mostrar_tabuleiro_custom(self.board)
 
     def flatten(self, board):
-        """Converte o board em uma lista ignorando o 0."""
+       
         return [num for row in board for num in row if num != 0]
 
     def count_inversions(self, board):
-        """Conta inversões na lista do board (usado para checagem de solubilidade)."""
+       
         flat = self.flatten(board)
         inversions = 0
         for i in range(len(flat)):
@@ -84,13 +80,11 @@ class EightPuzzle:
         return inversions
 
     def is_solvable(self, initial, target):
-        """
-        Para o 8-puzzle, o estado é solucionável se o número de inversões tiver a mesma paridade.
-        """
+       
         return (self.count_inversions(initial) % 2) == (self.count_inversions(target) % 2)
 
     def find_empty(self, board=None):
-        """Encontra a posição do espaço vazio (0)."""
+        
         if board is None:
             board = self.board
         for i in range(3):
@@ -100,13 +94,7 @@ class EightPuzzle:
         return None
 
     def move(self, direction):
-        """
-        Move uma peça na direção especificada.
-         - 'up': se empty não estiver na última linha, troca com a peça abaixo.
-         - 'down': se empty não estiver na primeira linha, troca com a peça acima.
-         - 'left': se empty não estiver na última coluna, troca com a peça à direita.
-         - 'right': se empty não estiver na primeira coluna, troca com a peça à esquerda.
-        """
+        
         x, y = self.find_empty()
         moved = False
 
@@ -129,19 +117,19 @@ class EightPuzzle:
             print(f"Movimentos: {self.moves}")
 
             if self.is_solved():
-                print(f"🎉 Parabéns! Você atingiu a configuração final em {self.moves} movimentos! 🎉")
+                print(f"🎉 Parabéns! Atingiu a configuração final em {self.moves} movimentos! 🎉")
                 keyboard.unhook_all()
 
     def is_solved(self):
-        """Verifica se o board atual é igual ao board alvo."""
+       
         return self.board == self.target_board
 
     def board_to_state(self, board):
-        """Converte board (lista de listas) em uma tupla de tuplas (hashable)."""
+       
         return tuple(tuple(row) for row in board)
 
     def get_neighbors(self, state):
-        """Retorna uma lista de (move, novo_estado) para o estado dado, seguindo as regras de movimentação."""
+        
         board = [list(row) for row in state]
         x, y = self.find_empty(board)
         neighbors = []
@@ -166,10 +154,7 @@ class EightPuzzle:
         return neighbors
 
     def heuristic_manhattan(self, state):
-        """
-        Heurística (distância Manhattan). Calcula a soma das distâncias
-        horizontais e verticais de cada peça até sua posição no tabuleiro alvo.
-        """
+        
         board = [list(row) for row in state]
         target = self.target_board
         target_pos = {}
@@ -186,9 +171,7 @@ class EightPuzzle:
         return distance
 
     def heuristic_hamming(self, state):
-        """
-        Heurística Hamming. Conta o número de peças fora do lugar (exceto o 0).
-        """
+        
         board = [list(row) for row in state]
         distance = 0
         for i in range(3):
@@ -198,11 +181,7 @@ class EightPuzzle:
         return distance
 
     def auto_solve_astar(self, heuristic):
-        """
-        Usa A* para achar a sequência ótima de movimentos partindo do board atual (inicial)
-        até o board alvo. Recebe a função heurística a ser utilizada.
-        Retorna uma lista de movimentos (strings).
-        """
+        
         start = self.board_to_state(self.board)
         goal = self.board_to_state(self.target_board)
         open_set = []
@@ -228,10 +207,7 @@ class EightPuzzle:
         return None
 
     def auto_solve_bfs(self):
-        """
-        Usa busca em largura (BFS) para achar uma solução (não necessariamente ótima)
-        e retorna a sequência de movimentos.
-        """
+        
         start = self.board_to_state(self.board)
         goal = self.board_to_state(self.target_board)
         queue = deque([(start, [])])
@@ -248,12 +224,7 @@ class EightPuzzle:
         return None
 
     def auto_solve(self):
-        """
-        Permite escolher qual algoritmo utilizar para a resolução automática:
-          [1] A* usando Manhattan,
-          [2] A* usando Hamming,
-          [3] BFS.
-        """
+        
         print("Algoritmos disponíveis:")
         print(" 1 - A* com Manhattan")
         print(" 2 - A* com Hamming")
@@ -278,10 +249,7 @@ class EightPuzzle:
         return solution
 
     def run_all_algorithms_minimal(self):
-        """
-        Executa os três algoritmos e mostra o caminho (e número de movimentos)
-        encontrado por cada um.
-        """
+        
         print("\nExecutando A* com Manhattan:")
         sol_manhattan = self.auto_solve_astar(self.heuristic_manhattan)
         if sol_manhattan is not None:
@@ -307,13 +275,7 @@ class EightPuzzle:
             print("Nenhuma solução encontrada.\n")
 
     def play(self):
-        """
-        Permite escolher entre resolução manual, automática (um algoritmo selecionado)
-        ou comparar todos os algoritmos (mostrando a solução com menores movimentos).
-         - Manual: usa as setas (keyboard) para mover.
-         - Automática: calcula solução usando o algoritmo escolhido e mostra cada movimento com avanço por Enter.
-         - Comparação: executa os três algoritmos e exibe os resultados.
-        """
+        
         mode = input("Escolha o modo (M para manual, A para automático, C para comparação): ").strip().upper()
         if mode == "M":
             print("Modo manual: Use as SETAS DIRECIONAIS para mover o espaço vazio (0). Pressione ESC para sair.")
