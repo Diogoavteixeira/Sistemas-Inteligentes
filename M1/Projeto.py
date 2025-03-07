@@ -327,7 +327,7 @@ class EightPuzzle:
                     break
             if self.is_solved():
                 self.mostrar_tabuleiro()
-                print(f"🎉 Parabéns! Você atingiu a configuração final em {self.moves} movimentos! 🎉")
+                print(f"🎉 Parabéns! Atingiu a configuração final em {self.moves} movimentos! 🎉")
         elif mode == "A":
             solution = self.auto_solve()
             if solution is None:
