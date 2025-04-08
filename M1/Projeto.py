@@ -19,6 +19,7 @@ class EightPuzzle: # Classe que representa o jogo do puzzle de 8 peças
         if not self.is_solvable(self.board, self.target_board): # Verifica se o puzzle é solucionável
             print("O puzzle não é solucionável com a configuração final dada!") # Mostra a mensagem de erro, se não o for solucionável.
             sys.exit(1) # Sai do programa com código de erro 1
+        
             
         self.moves = 0  # Contador de movimentos
 
