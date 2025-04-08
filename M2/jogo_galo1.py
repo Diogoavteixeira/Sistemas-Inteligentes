@@ -1,4 +1,5 @@
 import random
+import time
 
 def print_board(board):
     for row in board:
@@ -101,6 +102,8 @@ def get_computer_move(board, computer_player, human_player, use_alpha_beta=False
     if len(available_moves) == 9:
         return random.choice(available_moves)
 
+    # Medir o tempo de execução do algoritmo
+    start_time = time.time()
     for move in available_moves:
         board[move[0]][move[1]] = computer_player
         if use_alpha_beta:
@@ -112,6 +115,11 @@ def get_computer_move(board, computer_player, human_player, use_alpha_beta=False
         if score > best_score:
             best_score = score
             best_move = move
+    end_time = time.time()
+
+    # Exibir o tempo de execução
+    algorithm_name = "Alpha-Beta" if use_alpha_beta else "Minimax"
+    print(f"Tempo de execução ({algorithm_name}): {end_time - start_time:.6f} segundos")
 
     return best_move
 
