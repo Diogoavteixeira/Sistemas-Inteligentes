@@ -154,15 +154,47 @@ def play_computer_vs_computer():
 
         current_player = "O" if current_player == "X" else "X"
 
+def play_computer_solves():
+    print("\nModo: Computador resolve o jogo")
+    print("Escolha o algoritmo para o computador:")
+    print("1. Minimax")
+    print("2. Alpha-Beta")
+    algo_choice = int(input("Escolha (1-2): "))
+    if algo_choice not in [1, 2]:
+        print("Escolha inválida. A usar Minimax por padrão.")
+        algo_choice = 1
+
+    use_alpha_beta = (algo_choice == 2)
+
+    board = [[" " for _ in range(3)] for _ in range(3)]
+    computer_player = "X"
+    human_player = "O"
+
+    print("\nComputador está resolvendo o jogo...")
+    while not is_board_full(board):
+        print_board(board)
+        move = get_computer_move(board, computer_player, human_player, use_alpha_beta=use_alpha_beta)
+        board[move[0]][move[1]] = computer_player
+        print(f"Computador escolheu a posição {move[0] * 3 + move[1] + 1}")
+
+        if check_winner(board, computer_player):
+            print_board(board)
+            print("\nO computador venceu!")
+            return
+
+    print_board(board)
+    print("\nEmpate! O jogo acabou.")
+
 def play_game():
     while True:
         print("\nBem-vindo ao Jogo do Galo!")
         print("1. Jogar contra o computador")
         print("2. Computador vs Computador (opcional)")
-        print("3. Sair")
+        print("3. Computador resolve o jogo")
+        print("4. Sair")
 
         try:
-            mode = int(input("Escolha o modo (1-3): "))
+            mode = int(input("Escolha o modo (1-4): "))
             if mode == 1:
                 print("\nEscolha o algoritmo para o computador:")
                 print("1. Minimax")
@@ -235,6 +267,9 @@ def play_game():
                 play_computer_vs_computer()
 
             elif mode == 3:
+                play_computer_solves()
+
+            elif mode == 4:
                 print("\nObrigado por jogar!")
                 return
 
