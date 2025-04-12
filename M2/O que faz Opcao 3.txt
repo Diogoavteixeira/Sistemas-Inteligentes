@@ -1,0 +1,50 @@
+# O que faz a Opção 3
+
+A Opção 3 (`comparar_desempenho_algoritmos`) compara o desempenho dos algoritmos Minimax e Alpha-Beta em termos de tempo de execução e eficiência de memória.
+Eis como funciona:
+
+### O que faz:
+
+1. **Cria ambientes de teste**:
+   - Testa ambos os algoritmos em dois tamanhos diferentes de tabuleiro: 3x3 (Jogo do Galo padrão) e 4x4 (variante maior)
+   - Para cada tamanho, cria um tabuleiro parcialmente preenchido com jogadas aleatórias para simular estados de meio-jogo
+
+2. **Mede métricas de desempenho**:
+   - **Tempo de execução**: Quanto tempo cada algoritmo demora a determinar a melhor jogada
+   - **Nós visitados**: Quantos estados de jogo (nós na árvore de jogo) cada algoritmo explora
+
+3. **Visualiza os resultados**:
+   - Cria dois gráficos de barras comparando Minimax vs Alpha-Beta
+   - O gráfico da esquerda mostra a comparação do tempo de execução
+   - O gráfico da direita mostra o número de nós visitados
+   - Guarda a visualização como 'comparacao_algoritmos.png'
+
+### Fonte dos dados:
+
+Os dados não são pré-gravados nem baseados em fontes externas. Em vez disso, são gerados em tempo real através de:
+
+1. Criação de estados aleatórios de meio-jogo
+2. Execução de ambos os algoritmos em posições de tabuleiro idênticas
+3. Cronometragem da execução real com a função `time.time()` do Python
+4. Contagem dos nós visitados com a função `contar_nos_visitados()`
+
+O objetivo é demonstrar que a poda Alpha-Beta é mais eficiente que o Minimax padrão por:
+- Executar mais rapidamente (menor tempo de execução)
+- Explorar menos estados (visitar menos nós)
+
+Esta comparação mostra porque o Alpha-Beta é preferido na prática, mesmo produzindo as mesmas jogadas ótimas que o Minimax.
+
+
+Sim, conceptualmente o algoritmo Alpha-Beta deve ter um tempo médio significativamente mais baixo comparado com o Minimax. Esta é precisamente a vantagem principal da poda Alpha-Beta - conseguir o mesmo resultado ótimo do Minimax, mas explorando menos nós da árvore de jogo.
+
+Se estás a observar resultados onde o Alpha-Beta não está apresentando tempos menores, pode dever-se a algumas razões:
+
+1. **Casos de teste muito simples**: Em tabuleiros muito pequenos ou em fases iniciais do jogo, a vantagem do Alpha-Beta pode não ser tão significativa.
+
+2. **Ordem de exploração**: A eficiência do Alpha-Beta depende fortemente da ordem em que os movimentos são explorados. Se os melhores movimentos não forem avaliados primeiro, a poda será menos eficaz.
+
+3. **Overhead de implementação**: Em alguns casos, o código adicional necessário para implementar a poda pode adicionar um pequeno overhead que não é compensado pela redução do número de nós em problemas pequenos.
+
+Nos casos reais com árvores de jogo mais complexas, o Alpha-Beta deve mostrar uma vantagem substancial. À medida que o jogo avança para estados mais complexos (meio e fim de jogo), essa diferença de desempenho torna-se mais pronunciada, com o Alpha-Beta a tornar-se significativamente mais rápido.
+
+Podes experimentar criar tabuleiros mais complexos ou modificar a função `comparar_desempenho_algoritmos()` para usar estados de jogo mais avançados para ver a diferença de forma mais clara.

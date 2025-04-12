@@ -379,35 +379,12 @@ def jogar_humano_vs_computador():
 def jogar_computador_vs_computador():
     """Modo de jogo: Computador vs Computador com controlo passo a passo"""
     print("\nModo: Computador vs Computador")
-    
-    # Opção para escolher qual algoritmo começa
-    print("Qual algoritmo deve jogar primeiro?")
-    print("1. Minimax")
-    print("2. Alpha-Beta")
-    escolha_primeiro = input("Escolha (1-2): ")
-    
-    minimax_primeiro = (escolha_primeiro == "1")
-    
-    # Definir jogadores com base na escolha
-    if minimax_primeiro:
-        algoritmo_x = "Minimax"
-        algoritmo_o = "Alpha-Beta"
-        usar_alpha_beta_x = False
-        usar_alpha_beta_o = True
-    else:
-        algoritmo_x = "Alpha-Beta"
-        algoritmo_o = "Minimax"
-        usar_alpha_beta_x = True
-        usar_alpha_beta_o = False
-    
-    print(f"Jogador X usará {algoritmo_x}")
-    print(f"Jogador O usará {algoritmo_o}")
     print("Prima ENTER para avançar para a próxima jogada...")
     
     # Criar tabuleiro vazio
     tabuleiro = [[" " for _ in range(3)] for _ in range(3)]
     
-    # Computador X e O já definidos com base na escolha acima
+    # Computador X usa Minimax, Computador O usa Alpha-Beta
     computador_x = "X"
     computador_o = "O"
     jogador_atual = "X"
@@ -415,58 +392,26 @@ def jogar_computador_vs_computador():
     # Estatísticas
     tempos_minimax = []
     tempos_alpha_beta = []
-    nos_minimax = []
-    nos_alpha_beta = []
-    jogadas_realizadas = []
     
     # Loop de jogo
-    rodada = 1
     while True:
         mostrar_tabuleiro(tabuleiro)
-        print(f"Vez do jogador {jogador_atual} ({algoritmo_x if jogador_atual == 'X' else algoritmo_o})")
+        print(f"Vez do jogador {jogador_atual}")
         
         # Aguardar pressionar Enter para continuar
         input("Prima ENTER para fazer a próxima jogada...")
         
         # Obter jogada do computador
         if jogador_atual == computador_x:
-            jogada, tempo_execucao = obter_jogada_computador(tabuleiro, computador_x, computador_o, usar_alpha_beta=usar_alpha_beta_x)
-            algoritmo = algoritmo_x
-            
-            # Armazenar estatísticas no array correto
-            if usar_alpha_beta_x:
-                tempos_alpha_beta.append(tempo_execucao)
-                # Contar nós explorados para esta jogada
-                copia_tabuleiro = [linha[:] for linha in tabuleiro]
-                nos = contar_nos_visitados(copia_tabuleiro, True, computador_x, computador_o, usar_alpha_beta=True)
-                nos_alpha_beta.append(nos)
-            else:
-                tempos_minimax.append(tempo_execucao)
-                # Contar nós explorados para esta jogada
-                copia_tabuleiro = [linha[:] for linha in tabuleiro]
-                nos = contar_nos_visitados(copia_tabuleiro, True, computador_x, computador_o, usar_alpha_beta=False)
-                nos_minimax.append(nos)
-            
+            jogada, tempo_execucao = obter_jogada_computador(tabuleiro, computador_x, computador_o, usar_alpha_beta=False)
+            tempos_minimax.append(tempo_execucao)
+            algoritmo = "Minimax"
         else:
-            jogada, tempo_execucao = obter_jogada_computador(tabuleiro, computador_o, computador_x, usar_alpha_beta=usar_alpha_beta_o)
-            algoritmo = algoritmo_o
-            
-            # Armazenar estatísticas no array correto
-            if usar_alpha_beta_o:
-                tempos_alpha_beta.append(tempo_execucao)
-                # Contar nós explorados para esta jogada
-                copia_tabuleiro = [linha[:] for linha in tabuleiro]
-                nos = contar_nos_visitados(copia_tabuleiro, True, computador_o, computador_x, usar_alpha_beta=True)
-                nos_alpha_beta.append(nos)
-            else:
-                tempos_minimax.append(tempo_execucao)
-                # Contar nós explorados para esta jogada
-                copia_tabuleiro = [linha[:] for linha in tabuleiro]
-                nos = contar_nos_visitados(copia_tabuleiro, True, computador_o, computador_x, usar_alpha_beta=False)
-                nos_minimax.append(nos)
+            jogada, tempo_execucao = obter_jogada_computador(tabuleiro, computador_o, computador_x, usar_alpha_beta=True)
+            tempos_alpha_beta.append(tempo_execucao)
+            algoritmo = "Alpha-Beta"
         
         tabuleiro[jogada[0]][jogada[1]] = jogador_atual
-        jogadas_realizadas.append(rodada)
         
         print(f"Computador {jogador_atual} ({algoritmo}) escolheu a posição {jogada[0]*3 + jogada[1] + 1}")
         print(f"Tempo de execução: {tempo_execucao:.6f} segundos")
@@ -485,78 +430,13 @@ def jogar_computador_vs_computador():
         
         # Trocar jogador
         jogador_atual = "O" if jogador_atual == "X" else "X"
-        rodada += 1
     
-    # Mostrar estatísticas de desempenho detalhadas com gráficos
+    # Mostrar estatísticas de desempenho
     if tempos_minimax and tempos_alpha_beta:
         print("\nEstatísticas de Desempenho:")
         print(f"Tempo médio Minimax: {sum(tempos_minimax)/len(tempos_minimax):.6f} segundos")
         print(f"Tempo médio Alpha-Beta: {sum(tempos_alpha_beta)/len(tempos_alpha_beta):.6f} segundos")
         print(f"Aceleração Alpha-Beta: {sum(tempos_minimax)/sum(tempos_alpha_beta):.2f}x")
-        
-        if nos_minimax and nos_alpha_beta:
-            print(f"\nNós médios explorados Minimax: {sum(nos_minimax)/len(nos_minimax):.1f}")
-            print(f"Nós médios explorados Alpha-Beta: {sum(nos_alpha_beta)/len(nos_alpha_beta):.1f}")
-            print(f"Redução de nós com Alpha-Beta: {(1 - sum(nos_alpha_beta)/sum(nos_minimax))*100:.2f}%")
-        
-        # Criar visualizações
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-        
-        # Gráfico de tempo de execução por jogada
-        ax1.plot(jogadas_realizadas[:len(tempos_minimax)], tempos_minimax, 
-                 'b-o', label='Minimax')
-        ax1.plot(jogadas_realizadas[:len(tempos_alpha_beta)], tempos_alpha_beta, 
-                 'r-o', label='Alpha-Beta')
-        ax1.set_xlabel('Número da Jogada')
-        ax1.set_ylabel('Tempo de Execução (segundos)')
-        ax1.set_title('Tempo de Execução por Jogada')
-        ax1.legend()
-        ax1.grid(True)
-        
-        # Gráfico de nós visitados por jogada
-        if nos_minimax and nos_alpha_beta:
-            ax2.plot(jogadas_realizadas[:len(nos_minimax)], nos_minimax, 
-                     'b-o', label='Minimax')
-            ax2.plot(jogadas_realizadas[:len(nos_alpha_beta)], nos_alpha_beta, 
-                     'r-o', label='Alpha-Beta')
-            ax2.set_xlabel('Número da Jogada')
-            ax2.set_ylabel('Nós Visitados')
-            ax2.set_title('Nós Visitados por Jogada')
-            ax2.legend()
-            ax2.grid(True)
-        
-        plt.tight_layout()
-        plt.savefig('desempenho_jogo.png')
-        print("\nGráfico de desempenho guardado como 'desempenho_jogo.png'")
-        plt.show()
-        
-        # Comparação de barras (como na opção 3)
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-        
-        algoritmos = ['Minimax', 'Alpha-Beta']
-        tempos_medios = [sum(tempos_minimax)/len(tempos_minimax), 
-                          sum(tempos_alpha_beta)/len(tempos_alpha_beta)]
-        
-        ax1.bar([0, 1], tempos_medios, width=0.4)
-        ax1.set_xticks([0, 1])
-        ax1.set_xticklabels(algoritmos)
-        ax1.set_ylabel('Tempo Médio (segundos)')
-        ax1.set_title('Tempo de Execução Médio')
-        
-        if nos_minimax and nos_alpha_beta:
-            nos_medios = [sum(nos_minimax)/len(nos_minimax), 
-                           sum(nos_alpha_beta)/len(nos_alpha_beta)]
-            
-            ax2.bar([0, 1], nos_medios, width=0.4)
-            ax2.set_xticks([0, 1])
-            ax2.set_xticklabels(algoritmos)
-            ax2.set_ylabel('Nós Visitados (média)')
-            ax2.set_title('Nós Visitados Médios')
-        
-        plt.tight_layout()
-        plt.savefig('comparacao_algoritmos_jogo.png')
-        print("Comparação de algoritmos guardada como 'comparacao_algoritmos_jogo.png'")
-        plt.show()
 
 def visualizar_exploracao_tabuleiro():
     """Visualiza como os algoritmos exploram a árvore de jogo"""
