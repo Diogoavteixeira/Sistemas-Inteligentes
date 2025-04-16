@@ -1,4 +1,4 @@
-# Jogo do Galo Algoritmos Min-Max e Alpha Beta
+# Jogo do Galo Algoritmos Min-Max e Alpha Beta (Python)
 
 ## Descrição
 Implementação do Jogo do Galo (Tic-tac-toe) utilizando algoritmos Minimax e Alpha-Beta Pruning.
@@ -108,6 +108,6 @@ O programa gera automaticamente gráficos comparativos:
 - desempenho_jogo.png
 
 ## Dicas
-- Use o modo computador vs computador para análise de desempenho
-- Compare os algoritmos em diferentes estados do jogo
-- Observe os tempos de execução após cada jogada
+- Modo computador vs computador para análise de desempenho
+- Compara os algoritmos em diferentes estados do jogo
+- Observa os tempos de execução após cada jogada
