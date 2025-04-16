@@ -5,9 +5,12 @@ Implementação do Jogo do Galo (Tic-tac-toe) utilizando algoritmos Minimax e Al
 
 ## Estrutura do Projeto
 ```
-├── jogo_galo.py          # Arquivo principal do jogo
-├── README.md             # Esta documentação
-└── comparacao_algoritmos.png  # Gráficos de desempenho gerados
+    jogo_galo.py          # Arquivo principal do jogo
+    README.md             # Esta documentação
+    comparacao_algoritmos.png
+    Gráficos de desempenho gerados
+    Relatorio.docx
+    Si_Trabalho2.pdf
 ```
 
 ## Algoritmos Implementados
