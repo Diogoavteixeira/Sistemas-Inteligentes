@@ -1,7 +1,8 @@
 # Jogo do Galo — Algoritmos Minimax e Alpha-Beta (Python)
 
 ## Descrição
-Implementação do Jogo do Galo (Tic-tac-toe) em Python, utilizando os algoritmos Minimax e Alpha-Beta Pruning para tomada de decisão ótima pela IA. O projeto permite comparar o desempenho dos algoritmos e visualizar estatísticas.
+Implementação do Jogo do Galo (Tic-tac-toe) em Python, utilizando os algoritmos Minimax e Alpha-Beta para tomada de decisão. 
+O projeto permite comparar o desempenho dos algoritmos e visualizar estatísticas.
 
 ## Estrutura do Projeto
 ```
