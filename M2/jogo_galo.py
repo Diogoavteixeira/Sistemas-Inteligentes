@@ -3,10 +3,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-def mostrar_tabuleiro(tabuleiro):
-    """Mostra o estado atual do tabuleiro"""
-    print("-------------")
-    for linha in tabuleiro:
+def mostrar_tabuleiro(tabuleiro):#  """Mostra o tabuleiro do jogo"""
+    """Mostra o estado atual do tabuleiro""" #  
+    print("-------------") # 
+    for linha in tabuleiro:#
         print("| " + " | ".join(linha) + " |")
         print("-------------")
 
@@ -44,19 +44,7 @@ def obter_jogadas_possiveis(tabuleiro):
     return jogadas
 
 def minimax(tabuleiro, profundidade, e_maximizador, jogador, oponente):
-    """
-    Implementação do algoritmo Minimax
-    
-    Args:
-        tabuleiro: Estado atual do tabuleiro
-        profundidade: Profundidade atual na árvore de jogo
-        e_maximizador: Se é a vez do jogador maximizador
-        jogador: Símbolo do jogador IA
-        oponente: Símbolo do oponente
-        
-    Returns:
-        Melhor pontuação para o estado atual do tabuleiro
-    """
+
     # Casos base: verificar estados terminais
     if verificar_vencedor(tabuleiro, jogador):
         return 10 - profundidade  # Vitória, pontuação maior para vitórias mais rápidas
@@ -84,21 +72,7 @@ def minimax(tabuleiro, profundidade, e_maximizador, jogador, oponente):
         return melhor_pontuacao
 
 def alpha_beta(tabuleiro, profundidade, e_maximizador, jogador, oponente, alpha, beta):
-    """
-    Implementação do algoritmo Alpha-Beta
-    
-    Args:
-        tabuleiro: Estado atual do tabuleiro
-        profundidade: Profundidade atual na árvore de jogo
-        e_maximizador: Se é a vez do jogador maximizador
-        jogador: Símbolo do jogador IA
-        oponente: Símbolo do oponente
-        alpha: Valor alpha para poda
-        beta: Valor beta para poda
-        
-    Returns:
-        Melhor pontuação para o estado atual do tabuleiro
-    """
+   
     # Casos base: verificar estados terminais
     if verificar_vencedor(tabuleiro, jogador):
         return 10 - profundidade
@@ -132,18 +106,7 @@ def alpha_beta(tabuleiro, profundidade, e_maximizador, jogador, oponente, alpha,
         return melhor_pontuacao
 
 def obter_jogada_computador(tabuleiro, computador, humano, usar_alpha_beta=False):
-    """
-    Determina a melhor jogada para o computador
     
-    Args:
-        tabuleiro: Estado atual do tabuleiro
-        computador: Símbolo do computador
-        humano: Símbolo do humano
-        usar_alpha_beta: Se deve usar poda Alpha-Beta
-        
-    Returns:
-        A melhor jogada como tuplo (linha, coluna) e tempo de execução
-    """
     melhor_pontuacao = float('-inf')
     melhor_jogada = None
     jogadas_possiveis = obter_jogadas_possiveis(tabuleiro)
@@ -174,21 +137,7 @@ def obter_jogada_computador(tabuleiro, computador, humano, usar_alpha_beta=False
     return melhor_jogada, tempo_execucao
 
 def contar_nos_visitados(tabuleiro, e_maximizador, jogador, oponente, usar_alpha_beta=False, alpha=float('-inf'), beta=float('inf')):
-    """
-    Conta o número de nós visitados pelo algoritmo
-    
-    Args:
-        tabuleiro: Estado atual do tabuleiro
-        e_maximizador: Se é a vez do jogador maximizador
-        jogador: Símbolo do jogador IA
-        oponente: Símbolo do oponente
-        usar_alpha_beta: Se deve usar poda Alpha-Beta
-        alpha: Valor alpha para poda
-        beta: Valor beta para poda
-        
-    Returns:
-        Número de nós visitados
-    """
+   
     # Casos base: verificar estados terminais
     if verificar_vencedor(tabuleiro, jogador) or verificar_vencedor(tabuleiro, oponente) or tabuleiro_cheio(tabuleiro):
         return 1  # Nó terminal conta como 1
@@ -227,9 +176,7 @@ def contar_nos_visitados(tabuleiro, e_maximizador, jogador, oponente, usar_alpha
     return nos
 
 def comparar_desempenho_algoritmos():
-    """
-    Compara o desempenho dos algoritmos Minimax e Alpha-Beta
-    """
+    
     tamanhos_tabuleiro = [(i, i) for i in range(3, 5)]  # Testaremos com tabuleiros 3x3 e 4x4
     tempos_minimax = []
     tempos_alpha_beta = []
@@ -377,7 +324,7 @@ def jogar_humano_vs_computador():
         jogador_atual = "O" if jogador_atual == "X" else "X"
 
 def jogar_computador_vs_computador():
-    """Modo de jogo: Computador vs Computador com controlo passo a passo"""
+    
     print("\nModo: Computador vs Computador")
     
     # Opção para escolher qual algoritmo começa
@@ -559,7 +506,7 @@ def jogar_computador_vs_computador():
         plt.show()
 
 def visualizar_exploracao_tabuleiro():
-    """Visualiza como os algoritmos exploram a árvore de jogo"""
+ 
     print("\nVisualizando a exploração do tabuleiro...")
     
     # Criar um tabuleiro de exemplo de meio-jogo
