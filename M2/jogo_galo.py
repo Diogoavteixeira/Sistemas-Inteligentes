@@ -3,12 +3,20 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+#mostrar_tabuleiro(tabuleiro)
+#Mostra o estado atual do tabuleiro do jogo na consola, desenhando as linhas e colunas para facilitar a visualização do jogo.
+
 def mostrar_tabuleiro(tabuleiro):
     """Mostra o estado atual do tabuleiro"""
     print("-------------")  # Imprime a linha superior do tabuleiro
     for linha in tabuleiro:  # Itera por cada linha do tabuleiro
         print("| " + " | ".join(linha) + " |")  # Imprime cada célula da linha com separadores
         print("-------------")  # Imprime linha divisória após cada linha do tabuleiro
+
+
+#verificar_vencedor(tabuleiro, jogador)
+#Verifica se o jogador passado como argumento venceu o jogo, analisando linhas, colunas e diagonais do tabuleiro.
 
 def verificar_vencedor(tabuleiro, jogador):
     """Verifica se o jogador especificado venceu"""
@@ -33,9 +41,17 @@ def verificar_vencedor(tabuleiro, jogador):
     # Se nenhuma condição de vitória foi satisfeita
     return False
 
+
+#tabuleiro_cheio(tabuleiro)
+#Verifica se todas as casas do tabuleiro estão preenchidas, ou seja, se o jogo terminou em empate.
+
 def tabuleiro_cheio(tabuleiro):
     """Verifica se o tabuleiro está cheio (empate)"""
     return all(celula != " " for linha in tabuleiro for celula in linha)  # Retorna True se todas as células estão preenchidas
+
+
+#obter_jogadas_possiveis(tabuleiro)
+#Devolve uma lista de todas as posições (linha, coluna) disponíveis para jogar no tabuleiro.
 
 def obter_jogadas_possiveis(tabuleiro):
     """Retorna uma lista de jogadas disponíveis como tuplos (linha, coluna)"""
@@ -46,6 +62,11 @@ def obter_jogadas_possiveis(tabuleiro):
                 jogadas.append((i, j))  # Adiciona a coordenada da célula vazia à lista de jogadas
     return jogadas  # Retorna a lista completa de jogadas possíveis
 
+
+#minimax(tabuleiro, profundidade, e_maximizador, jogador, oponente)
+#Implementa o algoritmo Minimax, que avalia recursivamente todas as possibilidades de jogadas para escolher a melhor jogada possível para o jogador, 
+#assumindo que ambos jogam de forma ótima.
+
 def minimax(tabuleiro, profundidade, e_maximizador, jogador, oponente):
     """Implementa o algoritmo Minimax para escolher a melhor jogada"""
     # Casos base: verificar estados terminais
@@ -54,8 +75,7 @@ def minimax(tabuleiro, profundidade, e_maximizador, jogador, oponente):
     if verificar_vencedor(tabuleiro, oponente):
         return profundidade - 10  # Derrota, pontuação maior para derrotas mais lentas
     if tabuleiro_cheio(tabuleiro):
-        return 0  # Empate
-    
+        return 0  # Empate 
     # Casos recursivos - exploração de árvore de possibilidades
     if e_maximizador:  # Se é o turno maximizador (computador)
         melhor_pontuacao = float('-inf')  # Inicializa com o pior valor possível
@@ -73,6 +93,11 @@ def minimax(tabuleiro, profundidade, e_maximizador, jogador, oponente):
             tabuleiro[jogada[0]][jogada[1]] = " "  # Desfaz a jogada para explorar outras possibilidades
             melhor_pontuacao = min(pontuacao, melhor_pontuacao)  # Atualiza a melhor pontuação encontrada
         return melhor_pontuacao  # Retorna a melhor pontuação possível para o minimizador
+    
+
+#alpha_beta(tabuleiro, profundidade, e_maximizador, jogador, oponente, alpha, beta)
+#Implementa o algoritmo Minimax com poda Alpha-Beta, uma versão otimizada do Minimax que ignora ramos da árvore de decisão que não 
+#podem afetar o resultado final, tornando o processo mais eficiente.
 
 def alpha_beta(tabuleiro, profundidade, e_maximizador, jogador, oponente, alpha, beta):
     """Implementa o algoritmo Minimax com poda Alpha-Beta para melhorar a eficiência"""
@@ -108,6 +133,10 @@ def alpha_beta(tabuleiro, profundidade, e_maximizador, jogador, oponente, alpha,
                 break  # Corte alpha - poda o resto da árvore
         return melhor_pontuacao  # Retorna a melhor pontuação possível para o minimizador
 
+
+#obter_jogada_computador(tabuleiro, computador, humano, usar_alpha_beta=False)
+#Determina a melhor jogada para o computador, usando Minimax ou Alpha-Beta conforme especificado. Mede também o tempo de execução da decisão.
+
 def obter_jogada_computador(tabuleiro, computador, humano, usar_alpha_beta=False):
     """Determina a melhor jogada para o computador usando Minimax ou Alpha-Beta"""
     
@@ -140,6 +169,10 @@ def obter_jogada_computador(tabuleiro, computador, humano, usar_alpha_beta=False
     tempo_execucao = tempo_fim - tempo_inicio  # Calcula o tempo total de execução
     
     return melhor_jogada, tempo_execucao  # Retorna a melhor jogada e o tempo de execução
+
+
+#contar_nos_visitados(tabuleiro, e_maximizador, jogador, oponente, usar_alpha_beta=False, alpha=float('-inf'), beta=float('inf'))
+#Conta quantos estados do jogo (nós) são explorados pelo algoritmo (Minimax ou Alpha-Beta) a partir do estado atual do tabuleiro.
 
 def contar_nos_visitados(tabuleiro, e_maximizador, jogador, oponente, usar_alpha_beta=False, alpha=float('-inf'), beta=float('inf')):
     """Conta o número de nós (estados do jogo) explorados pelos algoritmos"""
@@ -181,6 +214,10 @@ def contar_nos_visitados(tabuleiro, e_maximizador, jogador, oponente, usar_alpha
         tabuleiro[jogada[0]][jogada[1]] = " "  # Desfaz a jogada
     
     return nos  # Retorna número total de nós visitados
+
+#comparar_desempenho_algoritmos()
+#Compara o desempenho dos algoritmos Minimax e Alpha-Beta em tabuleiros de diferentes tamanhos, 
+#medindo tempo de execução e número de nós visitados, e apresenta os resultados em gráficos.
 
 def comparar_desempenho_algoritmos():
     """Compara o desempenho dos algoritmos Minimax e Alpha-Beta em diferentes tamanhos de tabuleiro"""
@@ -246,6 +283,10 @@ def comparar_desempenho_algoritmos():
     plt.tight_layout()  # Ajusta layout
     plt.savefig('comparacao_algoritmos.png')  # Salva o gráfico como imagem
     plt.show()  # Mostra o gráfico na tela
+
+
+#jogar_humano_vs_computador()
+#Permite ao utilizador jogar contra o computador, escolhendo qual algoritmo o computador irá usar e quem começa o jogo.
 
 def jogar_humano_vs_computador():
     """Modo de jogo: Humano vs Computador"""
@@ -333,6 +374,10 @@ def jogar_humano_vs_computador():
         
         # Trocar jogador
         jogador_atual = "O" if jogador_atual == "X" else "X"  # Alterna entre X e O
+
+#jogar_computador_vs_computador()
+#Coloca dois algoritmos (Minimax e Alpha-Beta) a jogar um contra o outro automaticamente, 
+#mostrando o desempenho de cada um e apresentando estatísticas e gráficos.
 
 def jogar_computador_vs_computador():
     """Modo de jogo: Computador vs Computador - compara os algoritmos Minimax e Alpha-Beta"""
@@ -517,6 +562,10 @@ def jogar_computador_vs_computador():
         print("Comparação de algoritmos guardada como 'comparacao_algoritmos_jogo.png'")
         plt.show()  # Mostra o gráfico na tela
 
+
+#visualizar_exploracao_tabuleiro()
+#Mostra, num tabuleiro de meio-jogo, quantos nós cada algoritmo (Minimax e Alpha-Beta) explora, permitindo visualizar a diferença de eficiência entre eles.
+
 def visualizar_exploracao_tabuleiro():
     """Visualiza e compara a exploração de nós entre Minimax e Alpha-Beta em um tabuleiro de exemplo"""
  
@@ -540,6 +589,11 @@ def visualizar_exploracao_tabuleiro():
     print(f"Minimax explora {nos_minimax} nós")  # Mostra número de nós do Minimax
     print(f"Alpha-Beta explora {nos_alpha_beta} nós")  # Mostra número de nós do Alpha-Beta
     print(f"Eficácia da poda Alpha-Beta: {(1 - nos_alpha_beta/nos_minimax)*100:.2f}% de redução")  # Mostra percentual de redução
+
+
+#principal()
+#Função principal que apresenta o menu do programa e permite ao utilizador escolher entre jogar, ver simulação, comparar algoritmos ou sair do programa.
+#Se precisares de um resumo mais detalhado de alguma função específica, diz qual e eu aprofundo!
 
 def principal():
     """Função principal para executar o programa - Menu principal"""
