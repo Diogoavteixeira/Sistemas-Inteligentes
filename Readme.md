@@ -16,7 +16,15 @@ O Jogo do Galo é um jogo de estratégia simples onde dois jogadores alternam-se
 
 ### Descrição
 
-• Utilizar o m´odulo scikit-learn como fonte de dois conjuntos de dados: diabetes e iris.
-• Analisar os conjuntos de dados com estat´ısticas b´asicas sobre cada uma das colunas.
-• Treinar o modelo mais adequado para cada um dos conjuntos de dados (um modelo de classifica¸c˜ao para o dataset ”Iris” e um modelo de regress˜ao para o dataset ”Diabetes”).
-• Avalia¸c˜ao da performance de cada um dos modelos.
+Objetivos do Trabalho
+Utilizar o módulo scikit-learn como fonte de dois conjuntos de dados: diabetes e iris.
+
+Analisar os conjuntos de dados com estatísticas básicas sobre cada uma das colunas.
+
+Treinar o modelo mais adequado para cada um dos conjuntos de dados:
+
+Um modelo de classificação para o dataset Iris.
+
+Um modelo de regressão para o dataset Diabetes.
+
+Avaliar a performance de cada um dos modelos.
