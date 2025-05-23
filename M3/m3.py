@@ -41,6 +41,8 @@ y_pred_d = reg.predict(X_test_d)
 print("\nPerformance Regressão Diabetes:")
 print("MSE:", mean_squared_error(y_test_d, y_pred_d))  # Erro quadrático médio
 print("R2:", r2_score(y_test_d, y_pred_d))             # Coeficiente de determinação (R²)
+print("Primeiros 5 valores reais (Diabetes):", y_test_d.values[:5])
+print("Primeiros 5 valores previstos (Diabetes):", y_pred_d[:5])
 
 # --- Modelo de Classificação para o dataset Iris ---
 # Separar variáveis independentes (X_i) e variável dependente (y_i)
@@ -62,14 +64,18 @@ y_pred_i = clf.predict(X_test_i)
 print("\nPerformance Classificação Iris:")
 print("Acurácia:", accuracy_score(y_test_i, y_pred_i))      # Percentagem de acertos
 print(classification_report(y_test_i, y_pred_i))            # Relatório detalhado (precision, recall, f1-score)
+print("Primeiras 10 classes reais (Iris):", y_test_i.values[:10])
+print("Primeiras 10 classes previstas (Iris):", y_pred_i[:10])
 
 # Visualização dos dados do Diabetes (histograma das features)
+print("\nA mostrar histograma das features do Diabetes...")
 diabetes['data'].hist(figsize=(10, 8))
 plt.suptitle('Distribuição das Features do Diabetes')
 plt.tight_layout()
 plt.show()
 
 # Gráfico de dispersão: valores reais vs previstos (Diabetes)
+print("A mostrar gráfico de dispersão: valores reais vs previstos (Diabetes)...")
 plt.figure(figsize=(6, 6))
 plt.scatter(y_test_d, y_pred_d, alpha=0.7)
 plt.xlabel('Valores Reais')
@@ -80,6 +86,7 @@ plt.tight_layout()
 plt.show()
 
 # Gráfico de barras: classes reais vs previstas (Iris)
+print("A mostrar gráfico de barras: classes reais vs previstas (Iris)...")
 plt.figure(figsize=(6, 4))
 sns.countplot(x=y_test_i, label='Reais', color='blue', alpha=0.6)
 sns.countplot(x=y_pred_i, label='Previstos', color='orange', alpha=0.6)
