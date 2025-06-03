@@ -28,3 +28,4 @@ Um modelo de classificação para o dataset Iris.
 Um modelo de regressão para o dataset Diabetes.
 
 Avaliar a performance de cada um dos modelos.
+Random Forest e regressao Linear
